@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/gradient_blue">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/planificationStateChip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:checkable="false"
+            android:checked="false"
+            android:elegantTextHeight="false"
+            android:text="Planned"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:checkedIconVisible="false"
+            app:chipBackgroundColor="#E48814"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/planificationTypeTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/planificationLabelTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:typeface="normal" />
+
+            <TextView
+                android:id="@+id/dateTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:drawableLeft="@drawable/ic_clock___1315_"
+                android:drawablePadding="10dp"
+                android:drawableTint="#FFFFFF"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/planificationCustomerTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:drawableLeft="@drawable/ic_profile_round___1342_"
+                android:drawablePadding="10dp"
+                android:drawableTint="#FFFFFF"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/planificationDriverTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:drawableLeft="@drawable/ic_steering_wheel___666_"
+                android:drawablePadding="10dp"
+                android:drawableTint="#FFFFFF"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/planificationVehicleTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:drawableLeft="@drawable/ic_truck_round"
+                android:drawablePadding="10dp"
+                android:drawableTint="#FFFFFF"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/planificationCompletedProgressTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0% Completado"
+                android:textAlignment="viewEnd"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp" />
+
+            <ProgressBar
+                android:id="@+id/planificationCompletedProgressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/semi_card"
+            android:paddingLeft="20dp"
+            android:paddingTop="20dp"
+            android:paddingRight="20dp"
+            android:splitMotionEvents="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+
+            <androidx.gridlayout.widget.GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                app:columnCount="2"
+                app:orientation="horizontal"
+                app:rowCount="3"
+                app:useDefaultMargins="false">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:forceHasOverlappingRendering="false"
+                    app:cardCornerRadius="10dp"
+                    app:contentPadding="8dp"
+                    app:layout_columnWeight="1"
+                    app:layout_gravity="fill"
+                    app:layout_rowWeight="1">
+
+                    <TextView
+                        android:id="@+id/deliveriesCompletedProgressTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|right"
+                        android:layout_marginBottom="12dp"
+                        android:text="0% Completado"
+                        android:textColor="#00897B" />
+
+                    <ProgressBar
+                        android:id="@+id/deliveriesCompletedProgressBar"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:paddingTop="-15dp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/totalItemsChip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right|top"
+                        android:layout_marginTop="-7dp"
+                        android:text="0" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="37dp"
+                        android:layout_marginBottom="37dp"
+                        android:drawableTop="@drawable/ic__34_delivery_truck"
+                        android:drawablePadding="10dp"
+                        android:text="@string/deliveries"
+                        android:textAlignment="center"
+                        android:textSize="14sp" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:forceHasOverlappingRendering="false"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="6dp"
+                    app:contentPadding="8dp"
+                    app:layout_columnWeight="1"
+                    app:layout_gravity="fill"
+                    app:layout_rowWeight="1">
+
+                    <TextView
+                        android:id="@+id/deliveryLinesCompletedProgressTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|right"
+                        android:layout_marginBottom="12dp"
+                        android:text="0% Completado"
+                        android:textColor="#00897B" />
+
+                    <ProgressBar
+                        android:id="@+id/deliveryLinesCompletedProgressBar"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:paddingTop="-15dp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/deliveryLinesCountChip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right|top"
+                        android:layout_marginTop="-7dp"
+                        android:text="0" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="37dp"
+                        android:layout_marginBottom="37dp"
+                        android:drawableTop="@drawable/ic__05_checklist"
+                        android:drawablePadding="10dp"
+                        android:text="@string/delivery_lines"
+                        android:textAlignment="center"
+                        android:textSize="14sp" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:forceHasOverlappingRendering="false"
+                    app:cardCornerRadius="10dp"
+                    app:contentPadding="8dp"
+                    app:layout_columnWeight="1"
+                    app:layout_gravity="fill"
+                    app:layout_rowWeight="1">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/totalWeightChip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right|top"
+                        android:layout_marginTop="-7dp"
+                        android:text="0 Kg" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="32dp"
+                        android:layout_marginBottom="20dp"
+                        android:drawableTop="@drawable/ic__35_weight_scale"
+                        android:drawablePadding="10dp"
+                        android:text="@string/total_weight"
+                        android:textAlignment="center"
+                        android:textSize="14sp" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:forceHasOverlappingRendering="false"
+                    app:cardCornerRadius="10dp"
+                    app:contentPadding="8dp"
+                    app:layout_columnWeight="1"
+                    app:layout_gravity="fill"
+                    app:layout_rowWeight="1">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/totalValueChip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right|top"
+                        android:layout_marginTop="-7dp"
+                        android:text="0 $" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="32dp"
+                        android:layout_marginBottom="20dp"
+                        android:drawableTop="@drawable/ic__06_shipping_cost"
+                        android:drawablePadding="10dp"
+                        android:text="@string/total_value"
+                        android:textAlignment="center"
+                        android:textSize="14sp" />
+                </androidx.cardview.widget.CardView>
+
+            </androidx.gridlayout.widget.GridLayout>
+
+        </FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

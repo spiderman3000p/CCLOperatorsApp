@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="ic_launcher_background">#0647A8</color>
+    <color name="purple_200">#0003B3</color>
+    <color name="purple_700">#0003B3</color>
+    <color name="teal_200">#DA0360</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <!-- solo status de planificaciones -->
+    <color name="completed_bg">#0BAE00</color>
+    <color name="dispatched_bg">#0205CC</color>
+    <color name="assigned_bg">#6E4200</color>
+    <!-- status de planificaciones y deliveries -->
+    <color name="cancelled_bg">#B81A17</color>
+    <color name="created_bg">#01B37B</color>
+    <color name="planned_bg">#FFB300</color>
+    <!-- solo status de deliveries -->
+    <color name="ongoing_bg">#5E35B1</color>
+    <color name="indepot_bg">#5F0075</color>
+    <color name="delivered_bg">#0D6C11</color>
+    <color name="undelivered_bg">#7A7A7A</color>
+    <color name="partial_bg">#54A82F</color>
+    <color name="redispatched_bg">#05035C</color>
+
+    <color name="primaryColor">#0647A8</color>
+    <color name="primaryLightColor">#ffffff</color>
+    <color name="primaryDarkColor">#0003B3</color>
+    <color name="secondaryColor">#488F00</color>
+    <color name="secondaryLightColor">#6EDA01</color>
+    <color name="secondaryDarkColor">#306000</color>
+    <color name="primaryTextColor">#000000</color>
+    <color name="secondaryTextColor">#ffffff</color>
+    <color name="light_blue_600">#FF039BE5</color>
+    <color name="light_blue_A200">#FF40C4FF</color>
+    <color name="black_overlay">#66000000</color>
+</resources>

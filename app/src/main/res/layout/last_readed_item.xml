@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/skuDescriptionTv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toStartOf="@+id/quantitiesTv"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/deliveryBtn" />
+
+        <TextView
+            android:id="@+id/quantitiesTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1/2"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/skuDescriptionTv" />
+
+        <Button
+            android:id="@+id/deliveryBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_margin="0dp"
+            android:elevation="0dp"
+            android:foregroundGravity="fill_vertical|clip_vertical"
+            android:gravity="fill_vertical"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:lineSpacingExtra="12sp"
+            android:singleLine="true"
+            android:text="Delivery: 11212"
+            android:textAllCaps="true"
+            android:textColor="#FFFFFF"
+            android:textSize="10sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="spread_inside" />
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ref:"
+            android:textColor="@color/purple_700"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/referenceTv"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/referenceTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1121321312"
+            android:textColor="@color/purple_700"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/timestampTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:drawableTint="@color/black"
+            android:text="2020-11-19 13:14:55"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView6"
+            app:layout_constraintStart_toEndOf="@+id/imageView6"
+            app:layout_constraintTop_toTopOf="@+id/imageView6" />
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="20dp"
+            android:layout_height="18dp"
+            android:layout_marginTop="5dp"
+            android:contentDescription="TODO"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/skuDescriptionTv"
+            app:srcCompat="@drawable/ic_clock"
+            app:tint="@color/black" />
+
+        <ImageView
+            android:id="@+id/doneImage"
+            android:layout_width="25dp"
+            android:layout_height="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/skuDescriptionTv"
+            app:srcCompat="@drawable/ic_done"
+            app:tint="@color/ic_launcher_background" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

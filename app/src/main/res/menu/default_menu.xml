@@ -1,0 +1,25 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.tautech.cclapp.activities.PlanificationsActivity">
+    <item
+        android:id="@+id/clear_filter"
+        android:enabled="true"
+        android:icon="@drawable/ic_delete___1487_"
+        android:title="@string/clear_filter"
+        android:visible="false"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/search"
+        android:icon="@drawable/ic_search_white_24dp"
+        android:title="@string/search"
+        android:visible="false"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="always|collapseActionView" />
+    <item
+        android:id="@+id/default_action"
+        android:orderInCategory="100"
+        android:title="@string/logout"
+        android:visible="true"
+        app:showAsAction="never" />
+</menu>

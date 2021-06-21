@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/navigation_scan_transfer">
+
+    <fragment
+        android:id="@+id/navigation_scan_transfer"
+        android:name="com.tautech.cclappoperators.activities.ui_transfer.scan.ScanFragment"
+        android:label="@string/title_scan"
+        tools:layout="@layout/fragment_scan_transfer" />
+
+    <fragment
+        android:id="@+id/navigation_transfered"
+        android:name="com.tautech.cclappoperators.activities.ui_transfer.transfered.TransferedFragment"
+        android:label="@string/title_scanned"
+        tools:layout="@layout/fragment_scanned" />
+
+    <fragment
+        android:id="@+id/navigation_resume"
+        android:name="com.tautech.cclappoperators.activities.ui_transfer.resume.ResumeFragment"
+        android:label="@string/title_resume"
+        tools:layout="@layout/fragment_resume" />
+
+    <fragment
+        android:id="@+id/navigation_deliveries"
+        android:name="com.tautech.cclappoperators.activities.ui_transfer.deliveries.DeliveriesFragment"
+        android:label="@string/deliveries"
+        tools:layout="@layout/fragment_pending" />
+</navigation>

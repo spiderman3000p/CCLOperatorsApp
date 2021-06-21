@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/home___1391_"
+            android:title="@string/menu_home" />
+        <item
+            android:id="@+id/nav_urban_planifications"
+            android:icon="@drawable/ic__36_delivery_9"
+            android:title="@string/action_sign_in_urban" />
+        <item
+            android:id="@+id/nav_national_planifications"
+            android:icon="@drawable/ic__37_delivery_10"
+            android:title="@string/action_sign_in_national" />
+    </group>
+    <group >
+        <item
+            android:icon="@drawable/ic_profile_round___1342_"
+            android:title="@string/logout" />
+    </group>
+</menu>

@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "1081955853111",
+    "firebase_url": "https://cclexpress.firebaseio.com",
+    "project_id": "cclexpress",
+    "storage_bucket": "cclexpress.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1081955853111:android:a0d8fa9ecb3838daebf0b2",
+        "android_client_info": {
+          "package_name": "com.tautech.cclapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1081955853111-2rtl9rbrobimirqivsp53b6vsbq52fba.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBy7eyg-dDjkqrdD1ffaDqoFceFcDx4eiU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1081955853111-2rtl9rbrobimirqivsp53b6vsbq52fba.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1081955853111:android:1642f83d9e1fc85cebf0b2",
+        "android_client_info": {
+          "package_name": "com.tautech.cclappoperators"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1081955853111-2rtl9rbrobimirqivsp53b6vsbq52fba.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBy7eyg-dDjkqrdD1ffaDqoFceFcDx4eiU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1081955853111-2rtl9rbrobimirqivsp53b6vsbq52fba.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

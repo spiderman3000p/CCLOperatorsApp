@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_blue"
+    app:layout_columnWeight="0.5"
+    tools:context=".activities.DashboardActivity2">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="false"
+        android:alpha="0.2"
+        android:cropToPadding="false"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/truck_services__2_" />
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/menuOptions"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo_negative" />
+
+    <ProgressBar
+        android:id="@+id/progressBar2"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/menuOptions"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:orientation="vertical"
+        android:divider="@android:drawable/divider_horizontal_dark"
+        android:showDividers="middle"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#74000000"
+            android:divider="@android:drawable/divider_horizontal_dark"
+            android:orientation="horizontal"
+            android:showDividers="middle">
+
+            <TextView
+                android:id="@+id/transferDeliveriesBtnTv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:contextClickable="true"
+                android:drawablePadding="20dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:paddingLeft="20dp"
+                android:paddingTop="50dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="10dp"
+                android:text="@string/transfer_guides"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                app:drawableTopCompat="@drawable/_22_box_15" />
+
+            <TextView
+                android:id="@+id/redispatchDeliveriesBtnTv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:contextClickable="true"
+                android:drawableTop="@drawable/_93_box_12"
+                android:drawablePadding="20dp"
+                android:paddingLeft="20dp"
+                android:paddingTop="50dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="10dp"
+                android:text="@string/redispatch_guides"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#74000000"
+            android:divider="@android:drawable/divider_horizontal_dark"
+            android:orientation="horizontal"
+            android:showDividers="middle">
+
+            <TextView
+                android:id="@+id/urbanBtnTv"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:contextClickable="true"
+                android:drawableTop="@drawable/ic__36_delivery_9"
+                android:drawablePadding="20dp"
+                android:paddingLeft="20dp"
+                android:paddingTop="50dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="10dp"
+                android:singleLine="false"
+                android:text="@string/action_sign_in_urban"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/nationalBtnTv"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:contextClickable="true"
+                android:drawableTop="@drawable/ic__37_delivery_10"
+                android:drawablePadding="20dp"
+                android:paddingLeft="20dp"
+                android:paddingTop="50dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="10dp"
+                android:text="@string/action_sign_in_national"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/messageTv2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#D2000000"
+        android:padding="20dp"
+        android:text="TextView"
+        android:textColor="#FFFFFF"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

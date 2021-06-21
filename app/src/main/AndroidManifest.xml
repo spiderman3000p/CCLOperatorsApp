@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.tautech.cclappoperators" >
+
+    <queries>
+        <package android:name="com.google.android.apps.maps" />
+    </queries>
+
+    <uses-permission
+        android:name="android.permission.ACCESS_FINE_LOCATION"
+        android:required="true" />
+    <uses-permission
+        android:name="android.permission.ACCESS_NETWORK_STATE"
+        android:required="true" />
+    <uses-permission
+        android:name="android.permission.INTERNET"
+        android:required="true" />
+    <uses-permission android:name="com.symbol.emdk.permission.EMDK" /> <!-- uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:required="true" android:maxSdkVersion="28"/ -->
+    <uses-permission
+        android:name="android.permission.CAMERA"
+        android:required="true" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="18" />
+
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+
+            <category android:name="android.intent.category.BROWSABLE" />
+
+            <data android:scheme="https" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+
+            <category android:name="android.intent.category.APP_BROWSER" />
+
+            <data android:scheme="https" />
+        </intent>
+    </queries>
+
+    <application
+        android:name=".CCLAppOperators"
+        android:allowBackup="true"
+        android:configChanges="keyboardHidden|orientation|screenSize"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.CCLApp" >
+        <activity
+            android:name=".activities.InitializeActivity"
+            android:allowBackup="true"
+            android:label="@string/initialize"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@style/Theme.CCLApp" />
+        <activity
+            android:name=".activities.TransferActivity"
+            android:allowBackup="true"
+            android:label="@string/transfer_guides"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@style/Theme.CCLApp" />
+
+        <provider
+            android:name="androidx.work.impl.WorkManagerInitializer"
+            android:authorities="${applicationId}.workmanager-init"
+            tools:node="remove" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.tautech.cclappoperators.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true" >
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <uses-library
+            android:name="com.symbol.emdk"
+            android:required="false" />
+
+        <activity
+            android:name=".activities.LoginActivity"
+            android:theme="@style/Theme.CCLApp.NoActionBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activities.CertificateActivity"
+            android:label="@string/certificate"
+            android:theme="@style/Theme.CCLApp" />
+        <activity
+            android:name=".activities.RedispatchActivity"
+            android:label="@string/redispatch_guides"
+            android:theme="@style/Theme.CCLApp" />
+        <activity
+            android:name=".activities.PlanificationsActivity"
+            android:label="@string/title_activity_planifications"
+            android:theme="@style/Theme.CCLApp.NoActionBar" />
+        <activity
+            android:name=".activities.UrbanPlanificationsActivity"
+            android:label="@string/title_activity_planifications"
+            android:theme="@style/Theme.CCLApp.NoActionBar" />
+        <activity
+            android:name=".activities.DashboardActivity2"
+            android:label="@string/title_activity_dashbooard"
+            android:theme="@style/Theme.CCLApp" />
+        <activity
+            android:name=".activities.PlanificationDetailActivity"
+            android:label="@string/title_activity_delivery"
+            android:theme="@style/Theme.CCLApp" />
+        <activity
+            android:name=".activities.IntroActivity"
+            android:theme="@style/Theme.CCLApp.NoActionBar" />
+    </application>
+
+</manifest>

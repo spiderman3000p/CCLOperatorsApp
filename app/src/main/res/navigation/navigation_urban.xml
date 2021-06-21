@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/navigation_planification_detail">
+    <fragment
+        android:id="@+id/navigation_planification_detail"
+        android:name="com.tautech.cclappoperators.activities.ui_urban.detail.PlanificationDetailFragment"
+        android:label="@string/detail"
+        tools:layout="@layout/fragment_planification_detail" />
+    <fragment
+        android:id="@+id/navigation_deliveries"
+        android:name="com.tautech.cclappoperators.activities.ui_urban.pending.PendingDeliveriesFragment"
+        android:label="@string/deliveries"
+        tools:layout="@layout/fragment_pending_urban" />
+    <fragment
+        android:id="@+id/navigation_finished"
+        android:name="com.tautech.cclappoperators.activities.ui_urban.finished.FinishedDeliveriesFragment"
+        android:label="@string/finished"
+        tools:layout="@layout/fragment_finished_urban" />
+    <fragment
+        android:id="@+id/navigation_resume_urban"
+        android:name="com.tautech.cclappoperators.activities.ui_urban.resume.ResumeUrbanFragment"
+        android:label="@string/title_resume"
+        tools:layout="@layout/fragment_resume_urban" />
+</navigation>

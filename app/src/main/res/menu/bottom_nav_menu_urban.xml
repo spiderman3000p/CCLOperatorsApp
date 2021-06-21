@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_planification_detail"
+        android:icon="@drawable/ic_information___1446_"
+        android:iconTint="@color/black"
+        android:title="@string/detail" />
+
+    <item
+        android:id="@+id/navigation_deliveries"
+        android:icon="@drawable/ic_list___1422_"
+        android:iconTint="@color/black"
+        android:title="@string/deliveries" />
+
+    <item
+        android:id="@+id/navigation_finished"
+        android:icon="@drawable/ic_done___1477_"
+        android:iconTint="@color/black"
+        android:title="@string/finished" />
+    <item
+        android:id="@+id/navigation_resume_urban"
+        android:icon="@drawable/ic_directory_favorite___1639_"
+        android:iconTint="@color/black"
+        android:title="@string/title_resume" />
+
+
+</menu>

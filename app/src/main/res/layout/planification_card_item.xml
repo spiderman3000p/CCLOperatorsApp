@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="3dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    app:cardBackgroundColor="@color/primaryColor"
+    app:cardElevation="10dp"
+    app:cardPreventCornerOverlap="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:background="#FFFFFF">
+
+        <TextView
+            android:id="@+id/titleTv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:fontFamily="sans-serif-light"
+            android:maxLines="1"
+            android:textColor="@color/primaryDarkColor"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/openBtn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dateTv" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/secondaryLightColor"
+            app:layout_constraintEnd_toStartOf="@+id/openBtn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/titleTv" />
+
+        <TextView
+            android:id="@+id/addressTv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="4dp"
+            android:drawableLeft="@drawable/ic_pin_sharp_circle"
+            android:drawablePadding="10dp"
+            android:drawableTint="@color/primaryDarkColor"
+            android:text="Carrera  #57. Cruce Cajigal Av 7 C/#423"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toStartOf="@+id/openBtn"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider" />
+
+        <TextView
+            android:id="@+id/customerTv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:drawableLeft="@drawable/ic_profile_round___1342_"
+            android:drawablePadding="10dp"
+            android:drawableTint="@color/primaryDarkColor"
+            android:text="Electrolux"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toStartOf="@+id/openBtn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/addressTv" />
+
+        <TextView
+            android:id="@+id/qtyTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:drawableLeft="@drawable/ic_truck_round"
+            android:drawablePadding="10dp"
+            android:drawableTint="@color/primaryDarkColor"
+            android:text="255"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/customerTv" />
+
+        <TextView
+            android:id="@+id/deliveryLinesTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:drawableLeft="@drawable/ic_network_3"
+            android:drawablePadding="10dp"
+            android:drawableTint="@color/primaryDarkColor"
+            android:text="874"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toRightOf="@id/qtyTv"
+            app:layout_constraintTop_toTopOf="@+id/qtyTv" />
+
+        <TextView
+            android:id="@+id/unitsTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:drawableLeft="@drawable/ic_focus_horizontal_round"
+            android:drawablePadding="10dp"
+            android:drawableTint="@color/primaryDarkColor"
+            android:text="1304"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintStart_toEndOf="@+id/deliveryLinesTv"
+            app:layout_constraintTop_toTopOf="@+id/deliveryLinesTv" />
+
+        <ImageButton
+            style="@android:style/Widget.DeviceDefault.Light.ImageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:layout_marginEnd="16dp"
+            android:background="#00FFFFFF"
+            android:tint="#808080"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_menu_option___1376_" />
+
+        <!--ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="false"
+            android:paddingBottom="0dp"
+            android:progress="50"
+            android:translationY="6dp"
+            app:layout_constraintBottom_toTopOf="@+id/divider"
+            tools:layout_editor_absoluteX="0dp" /-->
+
+        <TextView
+            android:id="@+id/percentCertifiedTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00FFFFFF"
+            android:text="50.00%"
+            android:textColor="@color/secondaryColor"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@+id/titleTv"
+            app:layout_constraintEnd_toEndOf="@+id/titleTv"
+            app:layout_constraintTop_toTopOf="@+id/dateTv" />
+
+        <Button
+            android:id="@+id/openBtn"
+            android:layout_width="40dp"
+            android:layout_height="0dp"
+            android:background="?attr/selectableItemBackground"
+            android:drawableRight="@drawable/ic_arrow_right___333_"
+            android:drawablePadding="0dp"
+            android:drawableTint="@color/primaryDarkColor"
+            android:includeFontPadding="false"
+            app:iconPadding="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/dateTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:drawablePadding="5dp"
+            android:drawableTint="@color/black"
+            android:singleLine="false"
+            android:text="@string/date"
+            android:textAlignment="center"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/titleTv"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/stateTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/round_corners"
+            android:backgroundTint="@color/primaryColor"
+            android:paddingLeft="8dp"
+            android:paddingTop="2dp"
+            android:paddingRight="8dp"
+            android:paddingBottom="2dp"
+            android:text="@string/completed"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/deliveryLinesTv"
+            app:layout_constraintEnd_toStartOf="@+id/openBtn"
+            app:layout_constraintTop_toTopOf="@+id/deliveryLinesTv" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
