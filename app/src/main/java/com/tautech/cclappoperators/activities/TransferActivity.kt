@@ -212,7 +212,7 @@ class TransferActivity : AppCompatActivity() {
         val planificationId = viewModel.sourcePlanification.value?.id
         val url = "planificationDeliveryVO1s/search/findByPlanificationId?planificationId=${planificationId}"
         Log.i(TAG, "planification lines endpoint: ${url}")
-        val dataService: CclDataService? = CclClient.getInstance()?.create(
+        val dataService: CclDataService? = CclClient.getInstance(this)?.create(
             CclDataService::class.java)
         showLoader()
         if (dataService != null && accessToken != null) {
@@ -276,7 +276,7 @@ class TransferActivity : AppCompatActivity() {
         //var url = "planification/list/2;customerAddressId-filterType=number;customerAddressId-type=equals;customerAddressId-filter=${mStateManager?.customer?.addressId};planificationType-filterType=text;planificationType-type=equals;planificationType-filter=urban;"
         var url = "planification/byOperator/2;startRow=0;endRow=50000;sort-dispatchDate=desc;"
         Log.i(TAG, "planifications endpoint: $url")
-        val dataService: CclDataService? = CclClient.getInstance()?.create(
+        val dataService: CclDataService? = CclClient.getInstance(this)?.create(
             CclDataService::class.java)
         if (mStateManager?.customer == null){
             mStateManager?.loadCustomerAndAddress(this)

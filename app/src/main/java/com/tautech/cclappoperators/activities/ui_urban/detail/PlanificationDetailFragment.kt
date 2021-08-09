@@ -19,10 +19,8 @@ import com.tautech.cclappoperators.activities.PlanificationDetailActivityViewMod
 import com.tautech.cclappoperators.classes.AuthStateManager
 import com.tautech.cclappoperators.classes.Configuration
 import com.tautech.cclappoperators.database.AppDatabase
-import com.tautech.cclappoperators.interfaces.CclDataService
 import com.tautech.cclappoperators.services.CclClient
 import kotlinx.android.synthetic.main.fragment_planification_detail.*
-import kotlinx.android.synthetic.main.fragment_planification_detail.view.*
 import net.openid.appauth.AuthorizationException
 import retrofit2.Retrofit
 
@@ -40,7 +38,7 @@ class PlanificationDetailFragment : Fragment(), SwipeRefreshLayout.OnRefreshList
             savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.fragment_planification_detail, container, false)
-        retrofitClient = CclClient.getInstance()
+        retrofitClient = CclClient.getInstance(requireContext())
         mStateManager = AuthStateManager.getInstance(requireContext())
         val config = Configuration.getInstance(requireContext())
         try {
@@ -58,12 +56,19 @@ class PlanificationDetailFragment : Fragment(), SwipeRefreshLayout.OnRefreshList
         if (!mStateManager!!.current.isAuthorized) {
             showAlert("Sesion expirada", "Su sesion ha expirado", this::signOut)
         }
+        return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        (activity as PlanificationDetailActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        (activity as PlanificationDetailActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
         viewModel.deliveries.observe(viewLifecycleOwner, Observer{ deliveries ->
             calculateTotals()
         })
         viewModel.planification.observe(viewLifecycleOwner, Observer{planification ->
-            root.planificationStateChip.text = planification.state
-            root.planificationStateChip.chipBackgroundColor = when(planification.state) {
+            planificationStateChip.text = planification.state
+            planificationStateChip.chipBackgroundColor = when(planification.state) {
                 "Created" -> ContextCompat.getColorStateList(requireContext(), R.color.created_bg)
                 "Dispatched" -> ContextCompat.getColorStateList(requireContext(), R.color.dispatched_bg)
                 "Cancelled" -> ContextCompat.getColorStateList(requireContext(), R.color.cancelled_bg)
@@ -71,9 +76,9 @@ class PlanificationDetailFragment : Fragment(), SwipeRefreshLayout.OnRefreshList
                 "OnGoing" -> ContextCompat.getColorStateList(requireContext(), R.color.ongoing_bg)
                 else -> ContextCompat.getColorStateList(requireContext(), R.color.created_bg)
             }
-            root.dateTv.text = planification.dispatchDate
-            root.planificationTypeTv.text = planification.planificationType
-            root.planificationLabelTv.text = planification.label.let {
+            dateTv.text = planification.dispatchDate
+            planificationTypeTv.text = planification.planificationType
+            planificationLabelTv.text = planification.label.let {
                 if (it.isNullOrEmpty()) {
                     getString(R.string.no_label_planification)
                 } else {
@@ -82,20 +87,13 @@ class PlanificationDetailFragment : Fragment(), SwipeRefreshLayout.OnRefreshList
             }
             /*root.planificationCustomerTv.text = planification.customerName
             root.planificationDriverTv.text = planification.driverName*/
-            root.planificationDriverTv.visibility = View.GONE
-            root.planificationCustomerTv.visibility = View.GONE
-            root.planificationVehicleTv.text = planification.licensePlate
-            root.totalWeightChip.text = "%.2f".format(planification.totalWeight ?: 0) + " kg"
-            root.totalValueChip.text = "%.2f".format(planification.totalValue ?: 0) + " $"
+            planificationDriverTv.visibility = View.GONE
+            planificationCustomerTv.visibility = View.GONE
+            planificationVehicleTv.text = planification.licensePlate
+            totalWeightChip.text = "%.2f".format(planification.totalWeight ?: 0) + " kg"
+            totalValueChip.text = "%.2f".format(planification.totalValue ?: 0) + " $"
             refreshTotals()
         })
-        return root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        (activity as PlanificationDetailActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        (activity as PlanificationDetailActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
     }
 
     fun getCompletedDeliveryLinesProgress(): Int {

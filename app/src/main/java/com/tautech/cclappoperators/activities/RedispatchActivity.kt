@@ -9,6 +9,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.SearchView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -18,6 +19,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
 import com.tautech.cclappoperators.R
 import com.tautech.cclappoperators.classes.AuthStateManager
@@ -29,9 +31,11 @@ import com.tautech.cclappoperators.services.CclClient
 import com.tautech.cclappoperators.services.MyWorkerManagerService
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.layout
+import kotlinx.android.synthetic.main.activity_main.messageHomeTv
 import kotlinx.android.synthetic.main.activity_main.progressBar3
 import kotlinx.android.synthetic.main.activity_main.retryBtn
 import kotlinx.android.synthetic.main.activity_main.retryLayout
+import kotlinx.android.synthetic.main.activity_redispatch.*
 import kotlinx.android.synthetic.main.activity_transfer.*
 import net.openid.appauth.AuthorizationException
 import net.openid.appauth.AuthorizationService
@@ -44,6 +48,9 @@ import org.json.JSONException
 import retrofit2.Retrofit
 import java.io.IOException
 import java.net.SocketTimeoutException
+import java.text.SimpleDateFormat
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 
 class RedispatchActivity : AppCompatActivity() {
@@ -83,11 +90,23 @@ class RedispatchActivity : AppCompatActivity() {
             showAlert("Sesion expirada", "Su sesion ha expirado", this::signOut)
             return
         }
-        viewModel.planification.observe(this, Observer { _planification ->
+        /*viewModel.planification.observe(this, Observer { _planification ->
             if (_planification != null) {
                 planification = _planification
-                invalidateOptionsMenu()
+                //invalidateOptionsMenu()
                 Log.i(TAG, "Planification observada: ${_planification.id}")
+                fetchPlanificationLinesReq()
+            }
+        })*/
+        viewModel.endDate.observe(this, {timestamp ->
+            val endDate =  timestamp?.let {
+                SimpleDateFormat("yyyy-MM-dd").format(Date(it))
+            } ?: ""
+            val startDate = viewModel.endDate.value?.let {
+                SimpleDateFormat("yyyy-MM-dd").format(Date(it))
+            } ?: ""
+            dateFilterTv.text = "$startDate a $endDate"
+            if(startDate.isNotEmpty() && endDate.isNotEmpty()){
                 fetchPlanificationLinesReq()
             }
         })
@@ -97,15 +116,14 @@ class RedispatchActivity : AppCompatActivity() {
             if (extras.containsKey("planification")) {
                 planification = extras.getSerializable("planification") as Planification
                 Log.i(TAG, "posting value to planification")
-                viewModel.planification.postValue(planification)
+                //viewModel.planification.postValue(planification)
             } else {
                 Log.i(TAG, "no se recibio ninguna planificacion.")
             }
         } else {
             Log.i(TAG, "no se recibieron datos en el intent")
         }
-        fetchPlanifications()
-        MyWorkerManagerService.uploadFailedRedispatches(this)
+        //fetchPlanifications()
     }
 
     override fun onSaveInstanceState(state: Bundle) {
@@ -113,8 +131,11 @@ class RedispatchActivity : AppCompatActivity() {
         // user info is retained to survive activity restarts, such as when rotating the
         // device or switching apps. This isn't essential, but it helps provide a less
         // jarring UX when these events occur - data does not just disappear from the view.
-        if (viewModel.planification.value != null) {
+        /*if (viewModel.planification.value != null) {
             state.putSerializable(KEY_PLANIFICATION_INFO, viewModel.planification.value)
+        }*/
+        if (planification != null) {
+            state.putSerializable(KEY_PLANIFICATION_INFO, planification)
         }
     }
 
@@ -328,9 +349,12 @@ class RedispatchActivity : AppCompatActivity() {
             return
         }
         //val url = "delivery/label/planifications"
-        val url = "planificationDeliveryVO1s/search/findByPlanificationId?planificationId=${planification?.id}"
+        //val url = "planificationDeliveryVO1s/search/findByPlanificationId?planificationId=${planification?.id}"
+        val startDate = SimpleDateFormat("yyyy-MM-dd").format(Date(viewModel.startDate.value!!))
+        val endDate = SimpleDateFormat("yyyy-MM-dd").format(Date(viewModel.endDate.value!!))
+        val url = "deliveryVO7s/search/findByCustomerAddressIdAndOrderDateBetween?customerAddressId=${mStateManager?.customer?.addressId}&start=$startDate&end=$endDate"
         Log.i(TAG, "planification lines endpoint: ${url}")
-        val dataService: CclDataService? = CclClient.getInstance()?.create(
+        val dataService: CclDataService? = CclClient.getInstance(this)?.create(
             CclDataService::class.java)
         showLoader()
         showSnackbar("cargando guias...")
@@ -339,11 +363,11 @@ class RedispatchActivity : AppCompatActivity() {
                 try {
                     Log.i(TAG,
                         "fetching planification lines for planification ${planification?.id}")
-                    val call = dataService.getPlanificationLines(url, "Bearer $accessToken").execute()
+                    val call = dataService.getDeliveriesForRedispatch(url, "Bearer $accessToken").execute()
                     val response = call.body()
                     Log.i(TAG,
-                            "respuesta cargar lineas: $response")
-                    val deliveries = response?._embedded?.planificationDeliveryVO1s?.filter{
+                            "respuesta cargar deliveries: $response")
+                    val deliveries = response?._embedded?.deliveryVO7s?.filter{
                         it.deliveryState == "UnDelivered" || it.deliveryState == "Partial"
                     } ?: arrayListOf()
                     hideLoader()
@@ -351,6 +375,8 @@ class RedispatchActivity : AppCompatActivity() {
                     if (deliveries.isNullOrEmpty()) {
                         showSnackbar("No hay guias para cargar")
                     }
+                    db?.deliveryForRedispatchDao()?.deleteAll()
+                    db?.deliveryForRedispatchDao()?.insertAll(deliveries.toMutableList())
                     viewModel.deliveries.postValue(deliveries.toMutableList())
                 } catch (toe: SocketTimeoutException) {
                     hideLoader()
@@ -385,7 +411,7 @@ class RedispatchActivity : AppCompatActivity() {
         fetchData(this::fetchPlanificationLines)
     }
 
-    private fun fetchPlanifications() {
+    /*private fun fetchPlanifications() {
         fetchData(this::fetchPlanifications)
     }
 
@@ -452,7 +478,7 @@ class RedispatchActivity : AppCompatActivity() {
                 }
             }
         }
-    }
+    }*/
 
     private fun showRetryMessage(message: String, callback: () -> Unit) {
         runOnUiThread{
@@ -522,5 +548,39 @@ class RedispatchActivity : AppCompatActivity() {
                 Snackbar.LENGTH_SHORT)
                 .show()
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.activity_redispatch, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle item selection
+        return when (item.itemId) {
+            R.id.calendarBtn -> {
+                Log.i(TAG, "mostrando calendario...")
+                val builder = MaterialDatePicker.Builder.dateRangePicker()
+                val now = Calendar.getInstance()
+                builder.setSelection(androidx.core.util.Pair(now.timeInMillis, now.timeInMillis))
+                val picker = builder.build()
+                picker.show(supportFragmentManager, picker.toString())
+                picker.addOnNegativeButtonClickListener {
+                    picker.dismiss()
+                }
+                picker.addOnPositiveButtonClickListener {
+                    Log.i(TAG, "The selected date range is ${it.first} - ${it.second}")
+                    viewModel.startDate.setValue(it.first)
+                    viewModel.endDate.setValue(it.second)
+                }
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        return true
     }
 }

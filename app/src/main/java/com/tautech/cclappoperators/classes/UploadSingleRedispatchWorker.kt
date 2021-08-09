@@ -9,9 +9,6 @@ import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.tautech.cclappoperators.database.AppDatabase
 import com.tautech.cclappoperators.interfaces.CclDataService
-import com.tautech.cclappoperators.models.Certification
-import com.tautech.cclappoperators.models.CertificationToUpload
-import com.tautech.cclappoperators.models.PendingToUploadCertification
 import com.tautech.cclappoperators.models.PendingToUploadRedispatch
 import com.tautech.cclappoperators.services.CclClient
 import retrofit2.Retrofit
@@ -26,11 +23,9 @@ class UploadSingleRedispatchWorker
     private val MAX_REINTENT = 3
     private var failedRequestsCounter = 0
     var db: AppDatabase? = null
-    private var retrofitClient: Retrofit? = null
     private var mStateManager: AuthStateManager? = null
 
     override fun doWork(): Result {
-        retrofitClient = CclClient.getInstance()
         mStateManager = AuthStateManager.getInstance(appContext)
         try {
             db = AppDatabase.getDatabase(appContext)
@@ -49,12 +44,12 @@ class UploadSingleRedispatchWorker
             val planificationId = inputData.getLong("planificationId", 0)
             val pendingToUploadDelivery = db?.deliveryDao()?.getByIdAndPlanification(inputData.getLong("deliveryId", 0), planificationId)
             val pendingToUploadRedispatch = PendingToUploadRedispatch(sourcePlanificationId = planificationId, newState = "ReDispatched", deliveryId = pendingToUploadDelivery?.deliveryId!!)
-            val dataService: CclDataService? = CclClient.getInstance()?.create(
+            val dataService: CclDataService? = CclClient.getInstance(appContext)?.create(
                 CclDataService::class.java)
             if (dataService != null && mStateManager?.current?.accessToken != null) {
                 Log.i(TAG, "modificando estado de guia $pendingToUploadDelivery")
                     try {
-                        val url = "delivery/${pendingToUploadDelivery.deliveryId}/changeState?newState=ReDispatched"
+                        val url = "delivery/${pendingToUploadDelivery.deliveryId}/changeState?newState=ReDispatched&planificationId=${pendingToUploadDelivery.planificationId}"
                         val call = dataService.changeDeliveryState(url,
                             "Bearer ${mStateManager?.current?.accessToken}")
                             .execute()

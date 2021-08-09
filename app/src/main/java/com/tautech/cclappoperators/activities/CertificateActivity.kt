@@ -210,7 +210,7 @@ class CertificateActivity : AppCompatActivity() {
         Log.i(TAG, "fetching certified delivery lines for planification ${planification?.id}...")
         val url = "planificationCertifications/search/findByPlanificationId?planificationId=${planification?.id}"
         //Log.i(TAG_PLANIFICATIONS, "constructed user endpoint: $userInfoEndpoint")
-        val dataService: CclDataService? = CclClient.getInstance()?.create(
+        val dataService: CclDataService? = CclClient.getInstance(this)?.create(
             CclDataService::class.java)
         if (dataService != null && accessToken != null) {
             try {
@@ -416,7 +416,7 @@ class CertificateActivity : AppCompatActivity() {
         //val url = "delivery/label/planifications"
         val url = "planificationDeliveryVO1s/search/findByPlanificationId?planificationId=${planification?.id}"
         Log.i(TAG, "planification lines endpoint: ${url}")
-        val dataService: CclDataService? = CclClient.getInstance()?.create(
+        val dataService: CclDataService? = CclClient.getInstance(this)?.create(
             CclDataService::class.java)
         var deliveryMap: HashMap<String, PlanificationLine>? = hashMapOf()
         hideViews()
@@ -485,7 +485,7 @@ class CertificateActivity : AppCompatActivity() {
         //val url = "delivery/label/planifications"
         val url = "planificationCertificationVO1s/search/findByPlanificationId?planificationId=${planification?.id}"
         Log.i(TAG, "planification lines endpoint: ${url}")
-        val dataService: CclDataService? = CclClient.getInstance()?.create(
+        val dataService: CclDataService? = CclClient.getInstance(this)?.create(
             CclDataService::class.java)
         hideViews()
         showLoader()
@@ -666,7 +666,7 @@ class CertificateActivity : AppCompatActivity() {
         showSnackbar("Solicitando finalizacion de ruta...")
         val url = "planification/${planification?.id}/changeState?newState=$newState"
         //Log.i(TAG_PLANIFICATIONS, "constructed user endpoint: $userInfoEndpoint")
-        val dataService: CclDataService? = CclClient.getInstance()?.create(
+        val dataService: CclDataService? = CclClient.getInstance(this)?.create(
             CclDataService::class.java)
         if (dataService != null && accessToken != null) {
             doAsync {

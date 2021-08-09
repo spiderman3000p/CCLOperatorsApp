@@ -7,11 +7,14 @@ import androidx.room.RoomDatabase
 import com.tautech.cclappoperators.daos.*
 import com.tautech.cclappoperators.models.*
 
-@Database(entities = [Planification::class, DeliveryLine::class, Delivery::class, Certification::class, PendingToUploadCertification::class, PendingToUploadRedispatch::class, PendingToUploadTransfer::class], version = 1)
+@Database(entities = [Planification::class, DeliveryLine::class, Delivery::class,
+    Certification::class, PendingToUploadCertification::class, PendingToUploadRedispatch::class,
+    PendingToUploadTransfer::class, DeliveryForRedispatch::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun planificationDao(): PlanificationDao
     abstract fun deliveryLineDao(): DeliveryLineDao
     abstract fun deliveryDao(): DeliveryDao
+    abstract fun deliveryForRedispatchDao(): DeliveryForRedispatchDao
     abstract fun certificationDao(): CertifiedDeliveryLineDao
     abstract fun pendingToUploadCertificationDao(): PendingToUploadCertificationDao
     abstract fun pendingToUploadRedispatchDao(): PendingToUploadRedispatchDao

@@ -25,11 +25,9 @@ class UploadSingleCertificationWorker
     private val MAX_REINTENT = 3
     private var failedRequestsCounter = 0
     var db: AppDatabase? = null
-    private var retrofitClient: Retrofit? = null
     private var mStateManager: AuthStateManager? = null
 
     override fun doWork(): Result {
-        retrofitClient = CclClient.getInstance()
         mStateManager = AuthStateManager.getInstance(appContext)
         try {
             db = AppDatabase.getDatabase(appContext)
@@ -54,10 +52,10 @@ class UploadSingleCertificationWorker
             val certificationToUpload = CertificationToUpload()
             certificationToUpload.quantity = pendingToUploadCertification.quantity
             certificationToUpload.index = pendingToUploadCertification.index
-            certificationToUpload.delivery = "${CclClient.BASE_URL}deliveries/${pendingToUploadCertification.deliveryId}"
-            certificationToUpload.planification = "${CclClient.BASE_URL}planifications/${pendingToUploadCertification.planificationId}"
-            certificationToUpload.deliveryLine = "${CclClient.BASE_URL}deliveryLines/${pendingToUploadCertification.deliveryLineId}"
-            val dataService: CclDataService? = CclClient.getInstance()?.create(
+            certificationToUpload.delivery = "${CclClient.getBaseUrl(appContext)}deliveries/${pendingToUploadCertification.deliveryId}"
+            certificationToUpload.planification = "${CclClient.getBaseUrl(appContext)}planifications/${pendingToUploadCertification.planificationId}"
+            certificationToUpload.deliveryLine = "${CclClient.getBaseUrl(appContext)}deliveryLines/${pendingToUploadCertification.deliveryLineId}"
+            val dataService: CclDataService? = CclClient.getInstance(appContext)?.create(
                 CclDataService::class.java)
             if (dataService != null && mStateManager?.current?.accessToken != null) {
                 Log.i(TAG, "guardando certificacion $certificationToUpload")

@@ -120,7 +120,7 @@ class UrbanPlanificationsActivity : AppCompatActivity(), SwipeRefreshLayout.OnRe
         }
         url += "startRow=$startRow;endRow=$endRow;sort-dispatchDate=desc;"
         Log.i(TAG, "planifications endpoint: $url")
-        val dataService: CclDataService? = CclClient.getInstance()?.create(
+        val dataService: CclDataService? = CclClient.getInstance(this)?.create(
             CclDataService::class.java)
         if (mStateManager?.customer == null){
             mStateManager?.loadCustomerAndAddress(this)
@@ -207,7 +207,7 @@ class UrbanPlanificationsActivity : AppCompatActivity(), SwipeRefreshLayout.OnRe
         }
         url += "startRow=$startRow;endRow=$endRow;sort-planificationDate=desc;"
         Log.i(TAG, "planifications endpoint: $url")
-        val dataService: CclDataService? = CclClient.getInstance()?.create(
+        val dataService: CclDataService? = CclClient.getInstance(this)?.create(
                 CclDataService::class.java)
         mAdapter?.addLoadingView()
         if (dataService != null && accessToken != null && mStateManager?.customer?.addressId != null) {
@@ -417,7 +417,7 @@ class UrbanPlanificationsActivity : AppCompatActivity(), SwipeRefreshLayout.OnRe
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        /*startActivity(Intent(this, DashboardActivity2::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK and Intent.FLAG_ACTIVITY_CLEAR_TASK and Intent.FLAG_ACTIVITY_CLEAR_TOP))
+        /*startActivity(Intent(this, DashboardActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK and Intent.FLAG_ACTIVITY_CLEAR_TASK and Intent.FLAG_ACTIVITY_CLEAR_TOP))
         finish()*/
         onBackPressed()
         return true

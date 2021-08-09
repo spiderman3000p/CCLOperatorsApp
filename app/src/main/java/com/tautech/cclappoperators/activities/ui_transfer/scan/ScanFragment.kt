@@ -28,10 +28,8 @@ import com.tautech.cclappoperators.database.AppDatabase
 import com.tautech.cclappoperators.interfaces.CclDataService
 import com.tautech.cclappoperators.models.Delivery
 import com.tautech.cclappoperators.models.PendingToUploadTransfer
-import com.tautech.cclappoperators.models.Planification
 import com.tautech.cclappoperators.services.CclClient
 import com.tautech.cclappoperators.services.MyWorkerManagerService
-import kotlinx.android.synthetic.main.fragment_scan_redispatch.*
 import kotlinx.android.synthetic.main.fragment_scan_transfer.*
 import kotlinx.android.synthetic.main.fragment_scan_transfer.barcodeEt
 import kotlinx.android.synthetic.main.fragment_scan_transfer.constraintLayout
@@ -73,7 +71,7 @@ class ScanFragment : Fragment(), EMDKManager.EMDKListener, Scanner.StatusListene
         Log.i(TAG, "on create view...")
         // TODO obtener planificacion id de shared preferences y de la BD
         db = AppDatabase.getDatabase(requireContext())
-        dataService = CclClient.getInstance()?.create(
+        dataService = CclClient.getInstance(requireContext())?.create(
             CclDataService::class.java)
         mStateManager = AuthStateManager.getInstance(requireContext())
         Log.i(TAG, "Restoring state...")

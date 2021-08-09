@@ -26,8 +26,8 @@ android {
         applicationId "com.tautech.cclappoperators"
         minSdkVersion 17
         targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "1.2"
         vectorDrawables.useSupportLibrary true
         manifestPlaceholders = [
                 'appAuthRedirectScheme': 'com.tautech.cclappoperators'

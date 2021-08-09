@@ -61,7 +61,7 @@ class ScanFragment : Fragment(), EMDKManager.EMDKListener, Scanner.StatusListene
         Log.i(TAG, "on create view...")
         // TODO obtener planificacion id de shared preferences y de la BD
         db = AppDatabase.getDatabase(requireContext())
-        dataService = CclClient.getInstance()?.create(
+        dataService = CclClient.getInstance(requireContext())?.create(
             CclDataService::class.java)
         mStateManager = AuthStateManager.getInstance(requireContext())
         Log.i(TAG, "Restoring state...")

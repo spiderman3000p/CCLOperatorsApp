@@ -25,6 +25,13 @@ interface CclDataService {
 
     @GET
     @Headers("Content-Type: application/json")
+    fun getDeliveriesForRedispatch(
+        @Url url: String,
+        @Header("Authorization") authorization: String
+    ): Call<DeliveriesForRedispatchResponse>
+
+    @GET
+    @Headers("Content-Type: application/json")
     fun getPlanificationDeliveryLines(
         @Url url: String,
         @Header("Authorization") authorization: String

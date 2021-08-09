@@ -21,12 +21,10 @@ class UploadFailedRedispatchesWorker
 ) : Worker(appContext, workerParams) {
     private val TAG = "UPLOAD_FAILED_REDISPATCHES_WORKER"
     var db: AppDatabase? = null
-    private var retrofitClient: Retrofit? = null
     private var mStateManager: AuthStateManager? = null
     private var pendingRedispatches: List<PendingToUploadRedispatch>? = null
 
     fun initAll(){
-        retrofitClient = CclClient.getInstance()
         mStateManager = AuthStateManager.getInstance(appContext)
         try {
             db = AppDatabase.getDatabase(appContext)
@@ -47,7 +45,7 @@ class UploadFailedRedispatchesWorker
         initAll()
         pendingRedispatches = db?.pendingToUploadRedispatchDao()?.getAll()
         if (!pendingRedispatches.isNullOrEmpty()) {
-            val dataService: CclDataService? = CclClient.getInstance()?.create(
+            val dataService: CclDataService? = CclClient.getInstance(appContext)?.create(
                 CclDataService::class.java)
             if (dataService != null && mStateManager?.current?.accessToken != null) {
                 for(pendingRedispatch in pendingRedispatches!!) {

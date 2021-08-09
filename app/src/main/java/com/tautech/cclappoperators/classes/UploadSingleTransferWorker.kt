@@ -24,11 +24,9 @@ class UploadSingleTransferWorker
     private val MAX_REINTENT = 3
     private var failedRequestsCounter = 0
     var db: AppDatabase? = null
-    private var retrofitClient: Retrofit? = null
     private var mStateManager: AuthStateManager? = null
 
     override fun doWork(): Result {
-        retrofitClient = CclClient.getInstance()
         mStateManager = AuthStateManager.getInstance(appContext)
         try {
             db = AppDatabase.getDatabase(appContext)
@@ -52,7 +50,7 @@ class UploadSingleTransferWorker
             val deliveryId = inputData.getLong("deliveryId", 0)
             val pendingToUploadTransfer = PendingToUploadTransfer(sourcePlanificationId = sourcePlanificationId, targetPlanificationId = targetPlanificationId, deliveryId = deliveryId)
             Log.i(TAG, "pendingToUploadTransfer: $pendingToUploadTransfer")
-            val dataService: CclDataService? = CclClient.getInstance()?.create(
+            val dataService: CclDataService? = CclClient.getInstance(appContext)?.create(
                 CclDataService::class.java)
             if (pendingToUploadTransfer != null) {
                 if (dataService != null && mStateManager?.current?.accessToken != null) {

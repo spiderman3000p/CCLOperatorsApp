@@ -200,7 +200,7 @@ class LoginActivity : AppCompatActivity() {
             if (mAuthStateManager.customer == null || mAuthStateManager.carrierAddress == null || mAuthStateManager.carrierPartner == null || mAuthStateManager.keycloakUser == null) {*/
                 intent = Intent(this, InitializeActivity::class.java)
             /*} else {
-                intent = Intent(this, DashboardActivity2::class.java)
+                intent = Intent(this, DashboardActivity::class.java)
             }*/
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK and Intent.FLAG_ACTIVITY_CLEAR_TOP
             intent.putExtras(data!!.extras!!)

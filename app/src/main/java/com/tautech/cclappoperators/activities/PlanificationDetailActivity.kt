@@ -267,7 +267,7 @@ class PlanificationDetailActivity : AppCompatActivity() {
         showLoader()
         val url = "planificationDeliveryVO1s/search/findByPlanificationId?planificationId=${planification?.id}"
         Log.i(TAG, "planification data endpoint: ${url}")
-        val dataService: CclDataService? = CclClient.getInstance()?.create(
+        val dataService: CclDataService? = CclClient.getInstance(this)?.create(
             CclDataService::class.java)
         if (dataService != null && accessToken != null) {
             doAsync {
@@ -420,7 +420,7 @@ class PlanificationDetailActivity : AppCompatActivity() {
         showSnackbar("Solicitando cambio de estado...")
         val url = "planification/${planification?.id}/changeState?newState=$newState"
         //Log.i(TAG_PLANIFICATIONS, "constructed user endpoint: $userInfoEndpoint")
-        val dataService: CclDataService? = CclClient.getInstance()?.create(
+        val dataService: CclDataService? = CclClient.getInstance(this)?.create(
             CclDataService::class.java)
         if (dataService != null && accessToken != null) {
             doAsync {

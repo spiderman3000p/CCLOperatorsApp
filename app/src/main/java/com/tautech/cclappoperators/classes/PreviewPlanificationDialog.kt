@@ -95,7 +95,7 @@ class PreviewPlanificationDialog(val function: () -> Unit, val planificationId: 
     ) {
         val url = "collectionVO3s/search/findByPlanificationId?planificationId=${planificationId}"
         Log.i(TAG, "planifications endpoint: $url")
-        val dataService: CclDataService? = CclClient.getInstance()?.create(
+        val dataService: CclDataService? = CclClient.getInstance(requireContext())?.create(
                 CclDataService::class.java)
         if (mStateManager?.customer == null){
             mStateManager?.loadCustomerAndAddress(requireContext())

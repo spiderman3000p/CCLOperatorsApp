@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/gradient_blue"
     app:layout_columnWeight="0.5"
-    tools:context=".activities.DashboardActivity2">
+    tools:context=".activities.DashboardActivity">
 
     <ImageView
         android:layout_width="match_parent"

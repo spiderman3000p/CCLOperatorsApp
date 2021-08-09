@@ -26,7 +26,6 @@ import com.tautech.cclappoperators.interfaces.CclDataService
 import com.tautech.cclappoperators.interfaces.KeycloakDataService
 import com.tautech.cclappoperators.models.Customer
 import com.tautech.cclappoperators.models.Address
-import com.tautech.cclappoperators.models.CarrierPartner
 import com.tautech.cclappoperators.services.CclClient
 import com.tautech.cclappoperators.services.KeycloakClient
 import kotlinx.android.synthetic.main.activity_initialize.*
@@ -35,7 +34,6 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import org.joda.time.format.DateTimeFormat
 import org.json.JSONException
-import retrofit2.Retrofit
 import java.io.IOException
 import java.net.SocketTimeoutException
 
@@ -135,7 +133,7 @@ class InitializeActivity : AppCompatActivity() {
                     putString("addressJSON", gson.toJson(mStateManager?.customerAddress))
                     commit()
                 }
-                val intent = Intent(this, DashboardActivity2::class.java)
+                val intent = Intent(this, DashboardActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK and Intent.FLAG_ACTIVITY_CLEAR_TOP
                 startActivity(intent)
                 finish()
@@ -218,7 +216,7 @@ class InitializeActivity : AppCompatActivity() {
                 mStateManager?.carrierPartner = Gson().fromJson(sharedPref.getString("carrierPartnerJSON", null), CarrierPartner::class.java)
                 mStateManager?.customer = Gson().fromJson(sharedPref.getString("customerJSON", null), Customer::class.java)
                 mStateManager?.customerAddress = Gson().fromJson(sharedPref.getString("addressJSON", null), Address::class.java)
-                val intent = Intent(this, DashboardActivity2::class.java)
+                val intent = Intent(this, DashboardActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK and Intent.FLAG_ACTIVITY_CLEAR_TOP
                 startActivity(intent)
                 finish()
@@ -362,7 +360,7 @@ class InitializeActivity : AppCompatActivity() {
             }
             return
         }
-        val dataService: CclDataService? = CclClient.getInstance()?.create(
+        val dataService: CclDataService? = CclClient.getInstance(this)?.create(
             CclDataService::class.java)
         if (dataService != null && accessToken != null) {
             doAsync {
@@ -415,7 +413,7 @@ class InitializeActivity : AppCompatActivity() {
             }
             return
         }
-        val dataService: CclDataService? = CclClient.getInstance()?.create(
+        val dataService: CclDataService? = CclClient.getInstance(this)?.create(
             CclDataService::class.java)
         if (dataService != null && accessToken != null) {
             doAsync {
@@ -488,7 +486,7 @@ class InitializeActivity : AppCompatActivity() {
             }
             return
         }
-        val dataService: CclDataService? = CclClient.getInstance()?.create(
+        val dataService: CclDataService? = CclClient.getInstance(this)?.create(
                 CclDataService::class.java)
         if (dataService != null && accessToken != null) {
             doAsync {

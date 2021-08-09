@@ -20,12 +20,10 @@ class UploadFailedCertificationsWorker
 ) : Worker(appContext, workerParams) {
     private val TAG = "UPLOAD_CERTIFICATIONS_WORKER"
     var db: AppDatabase? = null
-    private var retrofitClient: Retrofit? = null
     private var mStateManager: AuthStateManager? = null
     private var pendingCertifications: List<PendingToUploadCertification>? = null
 
     fun initAll(){
-        retrofitClient = CclClient.getInstance()
         mStateManager = AuthStateManager.getInstance(appContext)
         try {
             db = AppDatabase.getDatabase(appContext)
@@ -46,7 +44,7 @@ class UploadFailedCertificationsWorker
         initAll()
         pendingCertifications = db?.pendingToUploadCertificationDao()?.getAll()
         if (!pendingCertifications.isNullOrEmpty()) {
-            val dataService: CclDataService? = CclClient.getInstance()?.create(
+            val dataService: CclDataService? = CclClient.getInstance(appContext)?.create(
                 CclDataService::class.java)
             if (dataService != null && mStateManager?.current?.accessToken != null) {
                 for(pendingCertification in pendingCertifications!!) {

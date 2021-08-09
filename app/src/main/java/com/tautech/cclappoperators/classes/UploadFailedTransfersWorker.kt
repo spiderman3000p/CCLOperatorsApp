@@ -21,12 +21,10 @@ class UploadFailedTransfersWorker
 ) : Worker(appContext, workerParams) {
     private val TAG = "UPLOAD_FAILED_REDISPATCHES_WORKER"
     var db: AppDatabase? = null
-    private var retrofitClient: Retrofit? = null
     private var mStateManager: AuthStateManager? = null
     private var pendingTransfers: List<PendingToUploadTransfer>? = null
 
     fun initAll(){
-        retrofitClient = CclClient.getInstance()
         mStateManager = AuthStateManager.getInstance(appContext)
         try {
             db = AppDatabase.getDatabase(appContext)
@@ -47,7 +45,7 @@ class UploadFailedTransfersWorker
         initAll()
         pendingTransfers = db?.pendingToUploadTransferDao()?.getAll()
         if (!pendingTransfers.isNullOrEmpty()) {
-            val dataService: CclDataService? = CclClient.getInstance()?.create(
+            val dataService: CclDataService? = CclClient.getInstance(appContext)?.create(
                 CclDataService::class.java)
             if (dataService != null && mStateManager?.current?.accessToken != null) {
                 for(pendingTransfer in pendingTransfers!!) {

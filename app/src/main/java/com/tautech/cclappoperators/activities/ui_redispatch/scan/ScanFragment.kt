@@ -8,9 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -21,15 +18,16 @@ import com.symbol.emdk.EMDKManager
 import com.symbol.emdk.EMDKManager.FEATURE_TYPE
 import com.symbol.emdk.EMDKResults
 import com.symbol.emdk.barcode.*
+import com.symbol.emdk.barcode.Scanner
 import com.tautech.cclappoperators.R
 import com.tautech.cclappoperators.activities.RedispatchActivityViewModel
+import com.tautech.cclappoperators.adapters.DeliveryForRedispatchAdapter
 import com.tautech.cclappoperators.adapters.PlanificationLineAdapter
 import com.tautech.cclappoperators.classes.AuthStateManager
 import com.tautech.cclappoperators.database.AppDatabase
-import com.tautech.cclappoperators.interfaces.CclDataService
 import com.tautech.cclappoperators.models.Delivery
+import com.tautech.cclappoperators.models.DeliveryForRedispatch
 import com.tautech.cclappoperators.models.PendingToUploadRedispatch
-import com.tautech.cclappoperators.services.CclClient
 import com.tautech.cclappoperators.services.MyWorkerManagerService
 import kotlinx.android.synthetic.main.fragment_scan_redispatch.*
 import kotlinx.android.synthetic.main.fragment_scan_redispatch.barcodeEt
@@ -38,13 +36,14 @@ import kotlinx.android.synthetic.main.fragment_scan_redispatch.listLabelTv
 import kotlinx.android.synthetic.main.fragment_scan_redispatch.overlayTv
 import kotlinx.android.synthetic.main.fragment_scan_redispatch.scannerStatusTv
 import kotlinx.android.synthetic.main.fragment_scan_redispatch.triggerBtn
-import kotlinx.android.synthetic.main.fragment_scan_transfer.*
 import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
+import kotlin.collections.ArrayList
 
 class ScanFragment : Fragment(), EMDKManager.EMDKListener, Scanner.StatusListener, Scanner.DataListener {
     val TAG = "SCAN_REDISP_FRAGMENT"
     val planificationsStrArray = arrayListOf<String>()
-    lateinit var planificationAdapter: ArrayAdapter<String>
+    //lateinit var planificationAdapter: ArrayAdapter<String>
     // Variables to hold EMDK related objects
     private var emdkManager: EMDKManager? = null
     private var scanSuccessBeep: MediaPlayer? = null
@@ -56,11 +55,10 @@ class ScanFragment : Fragment(), EMDKManager.EMDKListener, Scanner.StatusListene
     private var scanner: Scanner? = null
     // Variables to hold handlers of UI controls
     private val viewModel: RedispatchActivityViewModel by activityViewModels()
-    private var redispatchedDeliveriesShort: MutableList<Delivery> = mutableListOf()
-    private var mAdapter: PlanificationLineAdapter? = null
+    private var redispatchedDeliveriesShort: MutableList<DeliveryForRedispatch> = mutableListOf()
+    private var mAdapter: DeliveryForRedispatchAdapter? = null
     private var mStateManager: AuthStateManager? = null
     private var db: AppDatabase? = null
-    var dataService: CclDataService? = null
     //var scannedCounter: Int = 0
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -71,8 +69,6 @@ class ScanFragment : Fragment(), EMDKManager.EMDKListener, Scanner.StatusListene
         Log.i(TAG, "on create view...")
         // TODO obtener planificacion id de shared preferences y de la BD
         db = AppDatabase.getDatabase(requireContext())
-        dataService = CclClient.getInstance()?.create(
-            CclDataService::class.java)
         mStateManager = AuthStateManager.getInstance(requireContext())
         Log.i(TAG, "Restoring state...")
         scanSuccessBeep = MediaPlayer.create(context, R.raw.success)
@@ -100,25 +96,24 @@ class ScanFragment : Fragment(), EMDKManager.EMDKListener, Scanner.StatusListene
             } else {
                 redispatchedDeliveriesShort.addAll(redispatchedDeliveries)
             }
-            mAdapter?.notifyDataSetChanged()
+            activity?.runOnUiThread {
+                mAdapter?.notifyDataSetChanged()
+            }
             updateCounters()
         })
         viewModel.deliveries.observe(viewLifecycleOwner, Observer{ pendingDeliveries ->
             Log.i(TAG, "actualizando pendingDeliveries con ${pendingDeliveries}")
             updateCounters()
         })
-        viewModel.planifications.observe(viewLifecycleOwner, Observer { _planifications ->
+        /*viewModel.planifications.observe(viewLifecycleOwner, Observer { _planifications ->
             if (!_planifications.isNullOrEmpty()) {
-                planificationsStrArray.clear()
+                /*planificationsStrArray.clear()
                 planificationsStrArray.addAll(_planifications.map{
                     "${it.id} (${it.state}): ${it.licensePlate ?: "S/P"} - ${it.label ?: "S/L"} (${it.planificationType})"
-                })
-                planificationAdapter.notifyDataSetChanged()
-                planificationTv.isEnabled = true
-                if (viewModel.planificationStr.value != null){
-                    planificationTv.setText(viewModel.planificationStr.value)
-                }
-                if (viewModel.planification.value != null) {
+                })*/
+                //planificationAdapter.notifyDataSetChanged()
+                //planificationTv.isEnabled = true
+                /*if (viewModel.planification.value != null) {
                     Log.i(TAG, "hay una planificacion seleccionada")
                     val index = viewModel.planifications.value?.
                     indexOfFirst {
@@ -130,11 +125,11 @@ class ScanFragment : Fragment(), EMDKManager.EMDKListener, Scanner.StatusListene
                         planificationTv.performCompletion()
                         //planificationTv.listSelection = index
                     }
-                }
+                }*/
             } else {
-                planificationTv.isEnabled = false
+                //planificationTv.isEnabled = false
             }
-        })
+        })*/
         initEMDK()
     }
 
@@ -175,12 +170,11 @@ class ScanFragment : Fragment(), EMDKManager.EMDKListener, Scanner.StatusListene
     private fun initUI() {
         updateCounters()
         activity?.runOnUiThread {
-            val rv = activity?.findViewById<RecyclerView>(R.id.reciclerView)
-            mAdapter = PlanificationLineAdapter(redispatchedDeliveriesShort, null, this.requireContext())
-            rv?.layoutManager = LinearLayoutManager(this.requireContext())
-            rv?.adapter = mAdapter
+            mAdapter = DeliveryForRedispatchAdapter(redispatchedDeliveriesShort, null, this.requireContext())
+            recyclerViewTransfer?.layoutManager = LinearLayoutManager(this.requireContext())
+            recyclerViewTransfer?.adapter = mAdapter
+            planificationTv.isEnabled = false
         }
-        planificationTv.isEnabled = false
         barcodeEt?.setOnEditorActionListener {v, actionId, event ->
             return@setOnEditorActionListener when (actionId) {
                 EditorInfo.IME_ACTION_SEARCH -> {
@@ -196,9 +190,9 @@ class ScanFragment : Fragment(), EMDKManager.EMDKListener, Scanner.StatusListene
             }
             false
         })
-        planificationAdapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_list_item_1, planificationsStrArray)
-        planificationTv?.setAdapter(planificationAdapter);
-        planificationTv?.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+        //planificationAdapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_list_item_1, planificationsStrArray)
+        //planificationTv?.setAdapter(planificationAdapter);
+        /*planificationTv?.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             val str = planificationAdapter.getItem(position)
             Log.i(TAG, "selected source item: $str")
             if (str != null) {
@@ -211,7 +205,7 @@ class ScanFragment : Fragment(), EMDKManager.EMDKListener, Scanner.StatusListene
                     viewModel.planification.postValue(selectedPlanification!!)
                 }
             }
-        }
+        }*/
         triggerBtn?.setOnClickListener{_ ->
             if (barcodeEt?.text?.isEmpty() == false) {
                 doAsync {
@@ -358,25 +352,35 @@ class ScanFragment : Fragment(), EMDKManager.EMDKListener, Scanner.StatusListene
         }*/
         Log.i(TAG, "barcode readed: $deliveryNumber")
         // primero buscamos si ya fue escaneado
-        val exists = db?.deliveryDao()?.hasBeenRedispatched(deliveryNumber, viewModel.planification.value?.id!!)
-        if (exists != null) {
+        val delivery = db?.deliveryForRedispatchDao()?.getByDeliveryNumber(deliveryNumber)
+        if(delivery == null){
+            showSnackbar("Guia no existe")
+            return
+        }
+        val redispatchedDelivery = db?.deliveryForRedispatchDao()?.hasBeenRedispatched(deliveryNumber)
+        if (redispatchedDelivery != null) {
             doAsync {
                 scanExistsBeep?.start()
             }
-            Log.i(TAG, "delivery ya se encuentra redespachado en la BD local: $exists")
+            Log.i(TAG, "delivery ya se encuentra redespachado en la BD local: $redispatchedDelivery")
             showSnackbar("Esta guia ya fue escaneada")
             return
-        } else {
-            Log.i(TAG, "delivery no se encuentra redespachado en la BD local")
         }
-        var foundDelivery: Delivery? = null
-        var hasBeenRedispatched = false
+        Log.i(TAG, "delivery no se encuentra redespachado en la BD local")
+        var foundDelivery: DeliveryForRedispatch? = null
+        //var hasBeenRedispatched = false
         foundDelivery = viewModel.deliveries.value?.find { d ->
             d.deliveryNumber == deliveryNumber
         }
         if (foundDelivery != null) {
             doAsync {
                 scanSuccessBeep?.start()
+                /*db?.planificationDao()?.getById(foundDelivery.planificationId)?.let{
+                    val planificationStr = "${it.id} (${it.state}): ${it.licensePlate ?: "S/P"} - ${it.label ?: "S/L"} (${it.planificationType})"
+                    uiThread{
+                        planificationTv.setText(planificationStr)
+                    }
+                }*/
             }
             updateStatus("Codigo Encontrado")
             viewModel.deliveries.value?.remove(foundDelivery)
@@ -384,14 +388,15 @@ class ScanFragment : Fragment(), EMDKManager.EMDKListener, Scanner.StatusListene
             viewModel.processedDeliveries.value?.add(0, foundDelivery)
             viewModel.processedDeliveries.postValue(viewModel.processedDeliveries.value)
             doAsync {
-                db?.deliveryDao()?.update(foundDelivery)
+                db?.deliveryDao()?.changeStateById(foundDelivery.id, "ReDispatched")
                 val redispatch = PendingToUploadRedispatch()
-                redispatch.deliveryId = foundDelivery.deliveryId
-                redispatch.sourcePlanificationId = viewModel.planification.value?.id!!
+                redispatch.deliveryId = foundDelivery.id
+                //redispatch.sourcePlanificationId = viewModel.planification.value?.id!!
+                //redispatch.sourcePlanificationId = foundDelivery.planificationId
                 redispatch.newState = "ReDispatched"
                 MyWorkerManagerService.enqueUploadSingleRedispatchWork(requireContext(), redispatch)
             }
-        } else if (!hasBeenRedispatched) {
+        } else {
             doAsync {
                 scanFailBeep?.start()
             }

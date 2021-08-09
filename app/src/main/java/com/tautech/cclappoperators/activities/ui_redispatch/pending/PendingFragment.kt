@@ -17,9 +17,11 @@ import com.symbol.emdk.EMDKManager
 import com.symbol.emdk.barcode.*
 import com.tautech.cclappoperators.R
 import com.tautech.cclappoperators.activities.RedispatchActivityViewModel
+import com.tautech.cclappoperators.adapters.DeliveryForRedispatchAdapter
 import com.tautech.cclappoperators.adapters.PlanificationLineAdapter
 import com.tautech.cclappoperators.database.AppDatabase
 import com.tautech.cclappoperators.models.Delivery
+import com.tautech.cclappoperators.models.DeliveryForRedispatch
 import kotlinx.android.synthetic.main.fragment_pending.*
 
 class PendingFragment : Fragment(), EMDKManager.EMDKListener, Scanner.StatusListener, Scanner.DataListener {
@@ -29,9 +31,9 @@ class PendingFragment : Fragment(), EMDKManager.EMDKListener, Scanner.StatusList
     private var scanner: Scanner? = null;
     private val viewModel: RedispatchActivityViewModel by activityViewModels()
     private var db: AppDatabase? = null
-    private val filteredData: MutableList<Delivery> = mutableListOf()
+    private val filteredData: MutableList<DeliveryForRedispatch> = mutableListOf()
     val TAG = "PENDING_FRAG_REDISPATCH"
-    private var mAdapter: PlanificationLineAdapter? = null
+    private var mAdapter: DeliveryForRedispatchAdapter? = null
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
@@ -54,7 +56,7 @@ class PendingFragment : Fragment(), EMDKManager.EMDKListener, Scanner.StatusList
         activity?.actionBar?.setDisplayHomeAsUpEnabled(true)
         activity?.actionBar?.setDisplayShowHomeEnabled(true)
         Log.i(TAG, "on view created")
-        mAdapter = PlanificationLineAdapter(filteredData, null, this.requireContext())
+        mAdapter = DeliveryForRedispatchAdapter(filteredData, null, this.requireContext())
         pendingDeliveryLinesRv.layoutManager = LinearLayoutManager(this.requireContext())
         pendingDeliveryLinesRv.adapter = mAdapter
         searchEt4.setOnKeyListener { v, keyCode, event ->
@@ -210,7 +212,7 @@ class PendingFragment : Fragment(), EMDKManager.EMDKListener, Scanner.StatusList
 
     fun searchData(deliveryNumber: Long) {
         Log.i(TAG, "barcode readed: $deliveryNumber")
-        var foundDeliveries = listOf<Delivery>()
+        var foundDeliveries = listOf<DeliveryForRedispatch>()
         foundDeliveries = viewModel.deliveries.value!!.filter { d ->
             d.deliveryNumber == deliveryNumber
         }

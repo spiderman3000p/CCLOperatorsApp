@@ -167,4 +167,5 @@
     <string name="last_transfered_deliveries">Ultimas 5 Guias Transferidas de %1$d</string>
     <string name="planification">Planificacion</string>
     <string name="untransfered_guides">Guias No Transferidas</string>
+    <string name="api_url">https://api.dev.ccl-express.com/</string>
 </resources>

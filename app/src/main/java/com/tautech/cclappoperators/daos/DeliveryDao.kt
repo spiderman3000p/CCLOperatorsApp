@@ -33,6 +33,9 @@ interface DeliveryDao {
     @Update()
     fun update(delivery: Delivery)
 
+    @Query("UPDATE delivery SET deliveryState = :state WHERE deliveryId = CAST(:id AS NUMERIC)")
+    fun changeStateById(id: Long, state: String)
+
     @Delete
     fun delete(delivery: Delivery)
 
@@ -40,7 +43,10 @@ interface DeliveryDao {
     fun deleteAll()
 
     @Query("SELECT * FROM delivery WHERE deliveryId = CAST(:id AS NUMERIC)")
-    fun getById(id: Long?): Delivery
+    fun getById(id: Long?): Delivery?
+
+    @Query("SELECT * FROM delivery WHERE deliveryNumber = CAST(:deliveryNumber AS NUMERIC)")
+    fun getByDeliveryNumber(deliveryNumber: Long): Delivery?
 
     @Query("SELECT * FROM delivery WHERE deliveryId = CAST(:id AS NUMERIC) AND planificationId = CAST(:planificationId AS NUMERIC)")
     fun getByIdAndPlanification(id: Long?, planificationId: Long?): Delivery

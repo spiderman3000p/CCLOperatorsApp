@@ -142,12 +142,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <AutoCompleteTextView
+    <TextView
         android:id="@+id/planificationTv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:completionHint="@string/planification"
-        android:drawableStart="@drawable/arrow_right_up___354_"
         android:drawablePadding="10dp"
         android:hint="@string/source_planification"
         android:lines="1"
@@ -155,6 +154,7 @@
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:textColorHint="#515151"
+        app:drawableStartCompat="@drawable/arrow_right_up___354_"
         app:drawableTint="#E53935"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -10,8 +10,8 @@
     {
       "type": "SINGLE",
       "filters": [],
-      "versionCode": 1,
-      "versionName": "1.0CCLAppOperators",
+      "versionCode": 3,
+      "versionName": "1.2CCLAppOperators",
       "outputFile": "app-release.apk"
     }
   ]

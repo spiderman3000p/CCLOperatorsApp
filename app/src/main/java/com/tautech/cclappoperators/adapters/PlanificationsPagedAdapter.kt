@@ -327,7 +327,7 @@ class PlanificationsPagedAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private fun changePlanificationState(planification: Planification? = null, newState: String? = null) {
         val url = "planification/${planification?.id}/changeState?newState=$newState"
         Log.i(TAG, "constructed endpoint: $url")
-        val dataService: CclDataService? = CclClient.getInstance()?.create(
+        val dataService: CclDataService? = CclClient.getInstance(mContext)?.create(
                 CclDataService::class.java)
         if (dataService != null && mStateManager?.current?.accessToken != null) {
             Toast.makeText(mContext, mContext.getString(R.string.dispatching_), Toast.LENGTH_SHORT).show()
